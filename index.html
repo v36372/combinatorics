@@ -125,6 +125,19 @@
       updateShowMoreButtonF();
       updateShowMoreButtonX();
     }
+    document.getElementById("setF").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("setX").focus();
+      }
+    });
+
+    document.getElementById("setX").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        findSets();
+      }
+    });
   </script>
 </body>
 </html>
