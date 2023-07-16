@@ -23,8 +23,8 @@
   <h1>Set Intersection Finder</h1>
 
   <h2>Find Sets with Non-Empty Intersection</h2>
-  <label for="setA">Enter list of sets A:</label>
-  <input type="text" id="setA" placeholder="Example: 1,2,3;2,3,4;5,6,7;3,4,5" />
+  <label for="setF">Enter F:</label>
+  <input type="text" id="setF" placeholder="Example: 1,5,10,11" />
   <br>
   <label for="setX">Enter target set x:</label>
   <input type="text" id="setX" placeholder="Example: 2,4,6" />
@@ -40,10 +40,10 @@
   <script>
     function findSets() {
       const setFInput = document.getElementById("setF").value;
-      const k = document.getElementById("setK").value;
       const setXInput = document.getElementById("setX").value;
 
       const arr = setFInput.split(";").map(set => set.split(",").map(Number));
+      const k = arr.length
       const x = setXInput.split(",").map(Number);
 
 
