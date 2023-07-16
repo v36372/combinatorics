@@ -32,12 +32,39 @@
   <button onclick="findSets()">Find Sets</button>
   <div id="result-label">|F|:</div>
   <pre id="resultFLen"></pre>
+  <button id="show-more-btnf" onclick="toggleResultVisibilityF()">Show More</button>
   <pre id="resultF"></pre>
   <div id="result-label">|X|:</div>
   <pre id="resultXLen"></pre>
+  <button id="show-more-btnx" onclick="toggleResultVisibilityX()">Show More</button>
   <pre id="resultX"></pre>
 
   <script>
+    let fullResultDisplayedF = false;
+    let fullResultDisplayedX = false;
+    function toggleResultVisibilityF() {
+      fullResultDisplayed = !fullResultDisplayed;
+      updateShowMoreButtonF();
+    }
+
+    function updateShowMoreButtonF() {
+      const showMoreButton = document.getElementById("show-more-btnf");
+      const resultElement = document.getElementById("resultF");
+      showMoreButton.style.display = fullResultDisplayed ? "none" : "block";
+      resultElement.style.maxHeight = fullResultDisplayed ? "none" : "200px"; // Adjust the max height based on visibility
+    }
+    function toggleResultVisibilityX() {
+      fullResultDisplayed = !fullResultDisplayed;
+      updateShowMoreButtonF();
+    }
+
+    function updateShowMoreButtonX() {
+      const showMoreButton = document.getElementById("show-more-btnx");
+      const resultElement = document.getElementById("resultX");
+      showMoreButton.style.display = fullResultDisplayed ? "none" : "block";
+      resultElement.style.maxHeight = fullResultDisplayed ? "none" : "200px"; // Adjust the max height based on visibility
+    }
+
     function findSets() {
       const setFInput = document.getElementById("setF").value;
       const setXInput = document.getElementById("setX").value;
@@ -95,6 +122,8 @@
       const formattedResultX = result.map(set => `[${set.join(', ')}]`).join('\n');
       document.getElementById("resultXLen").innerText = result.length;
       document.getElementById("resultX").innerText = formattedResultX;
+      updateShowMoreButtonF();
+      updateShowMoreButtonX();
     }
   </script>
 </body>
