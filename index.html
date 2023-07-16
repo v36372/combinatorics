@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Set Intersection Finder</title>
+</head>
+<body>
+  <h1>Set Intersection Finder</h1>
+
+  <h2>Find Sets with Non-Empty Intersection</h2>
+  <label for="setA">Enter list of sets A:</label>
+  <input type="text" id="setA" placeholder="Example: 1,2,3;2,3,4;5,6,7;3,4,5" />
+  <br>
+  <label for="setX">Enter target set x:</label>
+  <input type="text" id="setX" placeholder="Example: 2,4,6" />
+  <br>
+  <button onclick="findSets()">Find Sets</button>
+  <p id="result"></p>
+
+  <script>
+    function findSets() {
+      const setAInput = document.getElementById("setA").value;
+      const setXInput = document.getElementById("setX").value;
+
+      const A = setAInput.split(";").map(set => set.split(",").map(Number));
+      const x = setXInput.split(",").map(Number);
+
+      const result = findSetsWithNonEmptyIntersection(A, x);
+
+      document.getElementById("result").innerText = `Result: ${JSON.stringify(result)}`;
+    }
+
+    // Your findSetsWithNonEmptyIntersection function here
+
+    // For the improved generateDistinctSets function, you can copy the code from the previous responses.
+  </script>
+</body>
+</html>
