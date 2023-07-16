@@ -78,7 +78,7 @@
       
       const distinctSets = generateDistinctSets(k, arr);
       console.log(distinctSets);
-      const formattedResult = disticntSets.map(set => `[${set.join(', ')}]`).join('\n');
+      const formattedResult = distinctSets.map(set => `[${set.join(', ')}]`).join('\n');
       document.getElementById("resultFLen").innerText = distinctSets.length;
       document.getElementById("resultF").innerText = formattedResult;
       
