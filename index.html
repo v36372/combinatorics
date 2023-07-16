@@ -69,11 +69,11 @@
       const setFInput = document.getElementById("setF").value;
       const setXInput = document.getElementById("setX").value;
 
-      const arr = setFInput.split(";").map(set => set.split(",").map(Number));
+      const arr = setFInput.split(",").map(Number);
       const k = arr.length
       const x = setXInput.split(",").map(Number);
 
-
+      console.log(k ,arr)
       function generateDistinctSets(k, arr) {
         const result = [];
         const currentSet = [];
