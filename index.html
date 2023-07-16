@@ -2,6 +2,22 @@
 <html>
 <head>
   <title>Set Intersection Finder</title>
+  <style>
+    /* Add some basic styling for better presentation */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1, h2 {
+      margin-bottom: 10px;
+    }
+    label {
+      font-weight: bold;
+    }
+    input, button {
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
   <h1>Set Intersection Finder</h1>
@@ -14,24 +30,72 @@
   <input type="text" id="setX" placeholder="Example: 2,4,6" />
   <br>
   <button onclick="findSets()">Find Sets</button>
-  <p id="result"></p>
+  <div id="result-label">|F|:</div>
+  <pre id="resultFLen"></pre>
+  <pre id="resultF"></pre>
+  <div id="result-label">|X|:</div>
+  <pre id="resultXLen"></pre>
+  <pre id="resultX"></pre>
 
   <script>
     function findSets() {
-      const setAInput = document.getElementById("setA").value;
+      const setFInput = document.getElementById("setF").value;
+      const k = document.getElementById("setK").value;
       const setXInput = document.getElementById("setX").value;
 
-      const A = setAInput.split(";").map(set => set.split(",").map(Number));
+      const arr = setFInput.split(";").map(set => set.split(",").map(Number));
       const x = setXInput.split(",").map(Number);
 
-      const result = findSetsWithNonEmptyIntersection(A, x);
 
-      document.getElementById("result").innerText = `Result: ${JSON.stringify(result)}`;
-    }
-
-    // Your findSetsWithNonEmptyIntersection function here
-
-    // For the improved generateDistinctSets function, you can copy the code from the previous responses.
+      function generateDistinctSets(k, arr) {
+        const result = [];
+        const currentSet = [];
+      
+        function generateSets(startIndex, maxAllowed, prevElement) {
+          if (currentSet.length === k) {
+            result.push([...currentSet]);
+            return;
+          }
+      
+          for (let i = startIndex; i < arr.length; i++) {
+            for (let j = 1; j <= arr[i] && j <= maxAllowed; j++) {
+              if (j > prevElement && !currentSet.includes(j)) {
+                currentSet.push(j);
+                generateSets(i + 1, arr[i+1], j);
+                currentSet.pop();
+              }
+            }
+          }
+        }
+      
+        generateSets(0, Infinity, 0);
+        return result;
+      }
+      
+      // Example usage:
+      // const k = 4;
+      // const arr = [1, 5, 10, 11];
+      
+      const distinctSets = generateDistinctSets(k, arr);
+      console.log(distinctSets);
+      const formattedResult = disticntSets.map(set => `[${set.join(', ')}]`).join('\n');
+      document.getElementById("resultFLen").innerText = distinctSets.length;
+      document.getElementById("resultF").innerText = formattedResult;
+      
+      function findSetsWithNonEmptyIntersection(A, x) {
+        return A.filter(set => set.some(item => x.includes(item)));
+      }
+      
+      // Example usage:
+      
+      // const x = [4, 5];
+      
+      const result = findSetsWithNonEmptyIntersection(distinctSets, x);
+      // console.log(result); // Output: [[1, 2, 3], [2, 3, 4], [5, 6, 7]]
+      const formattedResultX = result.map(set => `[${set.join(', ')}]`).join('\n');
+      document.getElementById("resultXLen").innerText = result.length;
+      document.getElementById("resultX").innerText = formattedResultX;
   </script>
 </body>
 </html>
+
