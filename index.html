@@ -10,6 +10,7 @@
     }
     h1, h2 {
       margin-bottom: 10px;
+      font-size: 40px;
     }
     label {
       font-weight: bold;
@@ -30,41 +31,68 @@
   <input type="text" id="setX" placeholder="Example: 2,4,6" />
   <br>
   <button onclick="findSets()">Find Sets</button>
-  <div id="result-label">|F|:</div>
+  <h1 id="result-label">|F|:</div>
   <pre id="resultFLen"></pre>
-  <button id="show-more-btnf" onclick="toggleResultVisibilityF()">Show More</button>
-  <pre id="resultF"></pre>
   <div id="result-label">|X|:</div>
   <pre id="resultXLen"></pre>
-  <button id="show-more-btnx" onclick="toggleResultVisibilityX()">Show More</button>
-  <pre id="resultX"></pre>
+  
+    <table>
+    <tr>
+      <th>List 1</th>
+      <th>List 2</th>
+    </tr>
+    <tr>
+      <td id="list1Display" class="hidden">
+        <!-- List 1 content will be displayed here -->
+      </td>
+      <td id="list2Display" class="hidden">
+        <!-- List 2 content will be displayed here -->
+      </td>
+    </tr>
+  </table>
+
+  <button id="toggle-btn" onclick="toggleList2Visibility()">Show more</button>
+
 
   <script>
-    let fullResultDisplayedF = false;
-    let fullResultDisplayedX = false;
-    function toggleResultVisibilityF() {
-      fullResultDisplayedF = !fullResultDisplayedF;
-      updateShowMoreButtonF();
+    let list2Visible = false;
+    function updateLists(listf, listx) {
+      displayList("list1Display", listf);
+      displayList("list2Display", listx);
+
+      list2Visible = false;
+      toggleList2Visibility();
     }
 
-    function updateShowMoreButtonF() {
-      const showMoreButton = document.getElementById("show-more-btnf");
-      const resultElement = document.getElementById("resultF");
-      showMoreButton.style.display = fullResultDisplayedF ? "none" : "block";
-      resultElement.style.maxHeight = fullResultDisplayedF ? "none" : "200px"; // Adjust the max height based on visibility
-    }
-    function toggleResultVisibilityX() {
-      fullResultDisplayedX = !fullResultDisplayedX;
-      updateShowMoreButtonF();
+    function toggleList2Visibility() {
+      list2Visible = !list2Visible;
+      const list1Element = document.getElementById("list1Display");
+      const list2Element = document.getElementById("list2Display");
+      const toggleButton = document.getElementById("toggle-btn");
+
+      if (list2Visible) {
+        list2Element.classList.remove("hidden");
+        list1Element.classList.remove("hidden");
+        toggleButton.textContent = "Hide";
+      } else {
+        list2Element.classList.add("hidden");
+        list1Element.classList.remove("hidden");
+        toggleButton.textContent = "Show";
+      }
     }
 
-    function updateShowMoreButtonX() {
-      const showMoreButton = document.getElementById("show-more-btnx");
-      const resultElement = document.getElementById("resultX");
-      showMoreButton.style.display = fullResultDisplayedX ? "none" : "block";
-      resultElement.style.maxHeight = fullResultDisplayedX ? "none" : "200px"; // Adjust the max height based on visibility
-    }
+    function displayList(displayId, list) {
+      const displayElement = document.getElementById(displayId);
 
+      const formattedList = list.map(subList => {
+        const items = subList.join(", ");
+        return `<li>${items}</li>`;
+      }).join('');
+
+      displayElement.innerHTML = `<ul>${formattedList}</ul>`;
+    }
+    
+    
     function findSets() {
       const setFInput = document.getElementById("setF").value;
       const setXInput = document.getElementById("setX").value;
@@ -105,9 +133,9 @@
       
       const distinctSets = generateDistinctSets(k, arr);
       console.log(distinctSets);
-      const formattedResult = distinctSets.map(set => `[${set.join(', ')}]`).join('\n');
+      const formattedResult = distinctSets.map(set => `[${set.join(', ')}]`).join('<br>');
       document.getElementById("resultFLen").innerText = distinctSets.length;
-      document.getElementById("resultF").innerText = formattedResult;
+      // document.getElementById("resultF").innerText = formattedResult;
       
       function findSetsWithNonEmptyIntersection(A, x) {
         return A.filter(set => set.some(item => x.includes(item)));
@@ -119,11 +147,11 @@
       
       const result = findSetsWithNonEmptyIntersection(distinctSets, x);
       // console.log(result); // Output: [[1, 2, 3], [2, 3, 4], [5, 6, 7]]
-      const formattedResultX = result.map(set => `[${set.join(', ')}]`).join('\n');
+      const formattedResultX = result.map(set => `[${set.join(', ')}]`).join('<br>');
       document.getElementById("resultXLen").innerText = result.length;
-      document.getElementById("resultX").innerText = formattedResultX;
-      updateShowMoreButtonF();
-      updateShowMoreButtonX();
+      // document.getElementById("resultX").innerText = formattedResultX;
+      // updateShowMoreButton();
+      updateLists(distinctSets, result);
     }
     document.getElementById("setF").addEventListener("keydown", function(event) {
       if (event.key === "Enter") {
