@@ -45,15 +45,11 @@
   
     <table>
     <tr>
-      <th>List 1</th>
-      <th>List 2</th>
+      <th>F1 ∩ F2</th>
     </tr>
     <tr>
       <td id="list1Display" class="hidden">
         <!-- List 1 content will be displayed here -->
-      </td>
-      <td id="list2Display" class="hidden">
-        <!-- List 2 content will be displayed here -->
       </td>
     </tr>
   </table>
@@ -63,9 +59,8 @@
 
   <script>
     let list2Visible = false;
-    function updateLists(listf, listx) {
+    function updateLists(listf) {
       displayList("list1Display", listf);
-      displayList("list2Display", listx);
 
       list2Visible = false;
       toggleList2Visibility();
@@ -74,15 +69,12 @@
     function toggleList2Visibility() {
       list2Visible = !list2Visible;
       const list1Element = document.getElementById("list1Display");
-      const list2Element = document.getElementById("list2Display");
       const toggleButton = document.getElementById("toggle-btn");
 
       if (list2Visible) {
-        list2Element.classList.remove("hidden");
         list1Element.classList.remove("hidden");
         toggleButton.textContent = "Hide";
       } else {
-        list2Element.classList.add("hidden");
         list1Element.classList.remove("hidden");
         toggleButton.textContent = "Show";
       }
@@ -101,9 +93,9 @@
     
     
     function findSets() {
-      const setF1Input = document.getElementById("setF1").value;
-      const setF2Input = document.getElementById("setF2").value;
-      const setXInput = document.getElementById("setX").value;
+      const setF1Input = document.getElementById("setF1").value.trim();
+      const setF2Input = document.getElementById("setF2").value.trim();
+      const setXInput = document.getElementById("setX").value.trim();
 
       
       const arr1 = setF1Input.split(" ").map(Number);
