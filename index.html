@@ -24,16 +24,19 @@
   <h1>Set Intersection Finder</h1>
 
   <h2>Find Sets with Non-Empty Intersection</h2>
-  <label for="setF">Enter F:</label>
-  <input type="text" id="setF" placeholder="Example: 1,5,10,11" />
+  <label for="setF1">Enter F1:</label>
+  <input type="text" id="setF1" placeholder="Example: 1,5,10,11" />
+  <br>
+  <label for="setF2">Enter F2:</label>
+  <input type="text" id="setF2" placeholder="Example: 1,5,10,11" />
   <br>
   <label for="setX">Enter target set x:</label>
   <input type="text" id="setX" placeholder="Example: 2,4,6" />
   <br>
   <button onclick="findSets()">Find Sets</button>
-  <h1 id="result-label">|F|:</h1>
+  <h1 id="result-label">|F1 ∪ F2|:</h1>
   <h1 id="resultFLen"></h1>
-  <h1 id="result-label">|X|:</h1>
+  <h1 id="result-label">|F1 ∪ F2 ∩ X != ∅|:</h1>
   <h1 id="resultXLen"></h1>
   
     <table>
@@ -94,14 +97,15 @@
     
     
     function findSets() {
-      const setFInput = document.getElementById("setF").value;
+      const setF1Input = document.getElementById("setF1").value;
+      const setF2Input = document.getElementById("setF2").value;
       const setXInput = document.getElementById("setX").value;
 
-      const arr = setFInput.split(",").map(Number);
-      const k = arr.length
+      const arr1 = setF1Input.split(",").map(Number);
+      const arr2 = setF2Input.split(",").map(Number);
+      const k = arr1.length
       const x = setXInput.split(",").map(Number);
 
-      console.log(k ,arr)
       function generateDistinctSets(k, arr) {
         const result = [];
         const currentSet = [];
@@ -131,8 +135,18 @@
       // const k = 4;
       // const arr = [1, 5, 10, 11];
       
-      const distinctSets = generateDistinctSets(k, arr);
-      console.log(distinctSets);
+      const distinctSets1 = generateDistinctSets(k, arr1);
+      const distinctSets2 = generateDistinctSets(k, arr2);
+
+      function arraysUnion(arrays) {
+        const merged = [].concat(...arrays);
+        const set = new Set(merged);
+        return Array.from(set);
+      }
+
+      distinctSets = arraysUnion([distinctSets1, distinctSets2])
+
+
       const formattedResult = distinctSets.map(set => `[${set.join(', ')}]`).join('<br>');
       document.getElementById("resultFLen").innerText = distinctSets.length;
       // document.getElementById("resultF").innerText = formattedResult;
@@ -153,14 +167,20 @@
       // updateShowMoreButton();
       updateLists(distinctSets, result);
     }
-    document.getElementById("setF").addEventListener("keydown", function(event) {
+    document.getElementById("setF1").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("setF2").focus();
+      }
+    });
+
+    document.getElementById("setF2").addEventListener("keydown", function(event) {
       if (event.key === "Enter") {
         event.preventDefault();
         document.getElementById("setX").focus();
       }
     });
-
-    document.getElementById("setX").addEventListener("keydown", function(event) {
+        document.getElementById("setX").addEventListener("keydown", function(event) {
       if (event.key === "Enter") {
         event.preventDefault();
         findSets();
