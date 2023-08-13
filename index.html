@@ -105,14 +105,10 @@
       const setF2Input = document.getElementById("setF2").value;
       const setXInput = document.getElementById("setX").value;
 
-      let deli = ","
-      if setF1Input.split(",").length < setF1Input.split(" ").length {
-        deli = " "
-      }
       
-      const arr1 = setF1Input.split(deli).map(Number);
-      const arr2 = setF2Input.split(deli).map(Number);
-      const k = arr1.length
+      const arr1 = setF1Input.split(" ").map(Number);
+      const arr2 = setF2Input.split(" ").map(Number);
+      const k = arr1.length;
       const x = setXInput.split(",").map(Number);
 
       function generateDistinctSets(k, arr) {
