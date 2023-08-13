@@ -3,7 +3,6 @@
 <head>
   <title>Set Intersection Finder</title>
   <style>
-    /* Add some basic styling for better presentation */
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
@@ -12,6 +11,7 @@
     h1, h2 {
       margin-bottom: 10px;
       font-size: 40px;
+      display: inline; /* or display: inline-block; */
     }
     label {
       font-weight: bold;
@@ -35,15 +35,22 @@
   <input type="text" id="setX" placeholder="Example: 2,4,6" />
   <br>
   <button onclick="findSets()">Find Sets</button>
-  <h2 id="result-labelf1">|F1|:</h1>
-  <h2 id="resultF1Len"></h1>
-  <h2 id="result-labelf2">|F2|:</h1>
-  <h2 id="resultF2Len"></h1>
-  <h2 id="result-label">|F1 ∪ F2|:</h1>
-  <h2 id="resultFLen"></h1>
-  <h2 id="result-label">|F1 ∪ F2 ∩ X != ∅|:</h1>
-  <h2 id="resultXLen"></h1>
-  
+  <p>
+  <h2 id="result-labelf1">|F1|: </h2>
+  <h2 id="resultF1Len"></h2>
+  </p>
+  <p>
+  <h2 id="result-labelf2">|F2|:</h2>
+  <h2 id="resultF2Len"></h2>
+  </p>
+  <p>
+  <h2 id="result-label">|F1 ∪ F2|:</h2>
+  <h2 id="resultFLen"></h2>
+  </p>
+  <p>
+  <h2 id="result-label">|F1 ∪ F2 ∩ X != ∅|:</h2>
+  <h2 id="resultXLen"></h2>
+  </p>
     <table>
     <tr>
       <th>F1 ∩ F2</th>
