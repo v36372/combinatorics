@@ -137,14 +137,22 @@
       
       const distinctSets1 = generateDistinctSets(k, arr1);
       const distinctSets2 = generateDistinctSets(k, arr2);
-
-      function arraysUnion(arrays) {
-        const merged = [].concat(...arrays);
-        const set = new Set(merged);
-        return Array.from(set);
+      function setsUnion(set1, set2) {
+          const unionSet = new Set();
+      
+          set1.forEach(subSet => {
+              unionSet.add(JSON.stringify(subSet));
+          });
+      
+          set2.forEach(subSet => {
+              unionSet.add(JSON.stringify(subSet));
+          });
+      
+          const result = Array.from(unionSet, str => JSON.parse(str));
+          return result;
       }
 
-      distinctSets = arraysUnion([distinctSets1, distinctSets2])
+      distinctSets = setsUnion(distinctSets1, distinctSets2)
 
 
       const formattedResult = distinctSets.map(set => `[${set.join(', ')}]`).join('<br>');
